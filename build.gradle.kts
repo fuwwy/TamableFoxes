@@ -1,33 +1,29 @@
 plugins {
     java
+    id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 group "net.seanomik.tamablefoxes"
 version "1.8.1-SNAPSHOT"
 
 repositories {
+    mavenCentral()
     maven("https://repo.codemc.io/repository/nms/")
     maven("https://jitpack.io")
 }
 
 // Workaround to support multiple mc versions
-val v1_14_R1: Configuration by configurations.creating { extendsFrom(configurations.compileOnly.get()) }
-val v1_15_R1: Configuration by configurations.creating { extendsFrom(configurations.compileOnly.get()) }
-val v1_16_R1: Configuration by configurations.creating { extendsFrom(configurations.compileOnly.get()) }
-val v1_16_R2: Configuration by configurations.creating { extendsFrom(configurations.compileOnly.get()) }
-val v1_16_R3: Configuration by configurations.creating { extendsFrom(configurations.compileOnly.get()) }
+val v1_17_1_R1: Configuration by configurations.creating { extendsFrom(configurations.compileOnly.get()) }
 
 dependencies {
-    v1_14_R1("org.spigotmc:spigot:1.14-R0.1-SNAPSHOT")
-    v1_15_R1("org.spigotmc:spigot:1.15-R0.1-SNAPSHOT")
-    v1_16_R1("org.spigotmc:spigot:1.16.1-R0.1-SNAPSHOT")
-    v1_16_R2("org.spigotmc:spigot:1.16.2-R0.1-SNAPSHOT")
-    v1_16_R3("org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT")
-    compileOnly("com.github.WesJD.AnvilGUI:anvilgui:5d0f592c63")
+    compileOnly("org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT")
+    implementation("com.github.WesJD.AnvilGUI:anvilgui:5d0f592c63")
+    implementation("org.ow2.asm:asm:9.1")
+    implementation("org.ow2.asm:asm-tree:9.1")
 }
 
 sourceSets {
     main {
-        compileClasspath += v1_14_R1 + v1_15_R1 + v1_16_R1 + v1_16_R2 + v1_16_R3
+        compileClasspath += v1_17_1_R1
     }
 }

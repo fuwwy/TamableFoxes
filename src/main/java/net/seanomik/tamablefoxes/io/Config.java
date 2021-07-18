@@ -1,11 +1,21 @@
 package net.seanomik.tamablefoxes.io;
 
-import net.seanomik.tamablefoxes.TamableFoxes;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class Config {
-    private static FileConfiguration config = TamableFoxes.getPlugin().getConfig();
+    private static FileConfiguration config = null;
+
+    public static void reloadConfig(Plugin plugin) {
+        plugin.reloadConfig();
+        Config.config = plugin.getConfig();
+    }
+
+    public static void setConfig(FileConfiguration config) {
+        Config.config = config;
+    }
 
     // Does the owner's name show if the foxes name?
     public static boolean doesShowOwnerInFoxName() { return config.getBoolean("show-owner-in-fox-name"); }
@@ -24,4 +34,8 @@ public class Config {
 
     // Check if the plugin asks for a fox name after taming.
     public static boolean askForNameAfterTaming() { return config.getBoolean("ask-for-name-after-taming"); }
+
+    public static String getPrefix() {
+        return ChatColor.translateAlternateColorCodes('&', config.contains("prefix") ? config.getString("prefix") : "&c[Tamable Foxes] ");
+    }
 }
